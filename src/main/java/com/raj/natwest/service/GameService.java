@@ -5,10 +5,20 @@ import com.raj.natwest.enums.Result;
 
 public interface GameService {
 
-    //return the result of the game
+    /**
+     * Get result of the game
+     *
+     * @param move by the player
+     * @return result of the game
+     *
+     */
     Result getResult(Moves playerMove);
 
-    //generates a random move
+    /**
+     * Generate random move out Rock, Paper or Scissors
+     *
+     * @return random move
+     */
     Moves getRandomMove();
 
 }

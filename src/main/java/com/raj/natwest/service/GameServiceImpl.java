@@ -1,6 +1,5 @@
 package com.raj.natwest.service;
 
-import com.raj.natwest.NatwestApplication;
 import com.raj.natwest.enums.Moves;
 import com.raj.natwest.enums.Result;
 import org.slf4j.Logger;
@@ -15,15 +14,14 @@ import java.util.Random;
 public class GameServiceImpl implements GameService {
 
     //constructor
-    public GameServiceImpl() {
-    }
+    public GameServiceImpl() {}
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public Result getResult(Moves playerMove) {
 
-        logger.info("getResult() method called with parameter playerMove = " + playerMove.toString());
+        logger.debug("parameter playerMove = " + playerMove.toString());
 
         try {
 
@@ -60,14 +58,9 @@ public class GameServiceImpl implements GameService {
 
             logger.debug("result = " + result.toString());
 
-            if (result == null) {
-                logger.error("result is null");
-            }
-
             return result;
 
         } catch (Exception e) {
-            logger.error(e.toString());
             throw e;
         }
     }
@@ -85,12 +78,10 @@ public class GameServiceImpl implements GameService {
             movesList.add(Moves.scissors);
 
             int rnd = new Random().nextInt(movesList.size());
-            logger.debug("random index = " + rnd);
 
             return movesList.get(rnd);
 
         } catch (Exception e) {
-            logger.error(e.toString());
             throw e;
         }
     }

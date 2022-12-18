@@ -20,11 +20,9 @@ public class gameController {
     @Autowired
     private GameServiceImpl gameService;
 
-    @ApiOperation(value = "Play the game", notes = "Returns the result of the game based on the parameter 'playerMove'")
+    @ApiOperation(value = "Get game result", notes = "Returns the result of the game based on the parameter 'playerMove'")
     @GetMapping("/play")
     public ResponseEntity<Object> getResponse(@RequestParam(value = "playerMove") String player) {
-
-        logger.debug("String player argument = " + player);
 
         Moves playerMove;
 
@@ -42,7 +40,9 @@ public class gameController {
             return new ResponseEntity<>(e.getMessage() + " => Enter moves from Rock, Paper or Scissors only", HttpStatus.BAD_REQUEST);
         }
 
-        logger.info("getResponse() method called with playerMove = " + playerMove.toString());
+
+        logger.debug("playerMove : " + playerMove);
+
 
         //return result
         Result result = gameService.getResult(playerMove);
