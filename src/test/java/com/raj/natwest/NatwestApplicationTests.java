@@ -27,6 +27,8 @@ class NatwestApplicationTests {
 		System.out.println("End test...\n\n");
 	}
 
+
+	/** Test for result method -> getResult() */
 	@Test
 	void testGetResult(){
 
@@ -71,17 +73,21 @@ class NatwestApplicationTests {
 	}
 
 
+	/** Test for empty input case*/
 	@Test
 	void emptyPlayerMoveTest(){
 		assertThrows(NullParameterException.class, () -> gameService.getResult("",Moves.rock));
 	}
 
+	/** Test for invalid input case*/
 	@Test
 	void invalidPlayerMove(){
 		assertThrows(InvalidMoveException.class, () -> gameService.getResult("rook",Moves.rock));
 		assertThrows(InvalidMoveException.class, () -> gameService.getResult("sicsor",Moves.rock));
+		assertThrows(InvalidMoveException.class, () -> gameService.getResult("xyz",Moves.rock));
 	}
 
+	/** Test for random move generation method -> getRandomMove() */
 	@Test
 	void randomComputerMoveTest(){
 		assertThat(gameService.getRandomMove()).isIn(Moves.scissors, Moves.paper, Moves.rock);
