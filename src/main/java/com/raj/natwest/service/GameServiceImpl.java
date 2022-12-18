@@ -1,9 +1,10 @@
 package com.raj.natwest.service;
 
 import com.raj.natwest.enums.Moves;
-import com.raj.natwest.enums.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class GameServiceImpl implements GameService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public Result getResult(Moves playerMove) {
+    public String getResult(Moves playerMove) {
 
         logger.debug("parameter playerMove = " + playerMove.toString());
 
@@ -28,35 +29,35 @@ public class GameServiceImpl implements GameService {
             Moves computerMove = getRandomMove();
             logger.debug("computerMove = " + computerMove.toString());
 
-            Result result = null;
+            String result = null;
 
             if (computerMove.equals(Moves.paper)) {
                 if (playerMove.equals(Moves.rock)) {
-                    result = Result.computer_win;
+                    result = "Computer wins";
                 } else if (playerMove.equals(Moves.paper)) {
-                    result = Result.tie;
+                    result = "It is a tie";
                 } else {
-                    result = Result.player_win;
+                    result = "Player wins";
                 }
             } else if (computerMove.equals(Moves.rock)) {
                 if (playerMove.equals(Moves.rock)) {
-                    result = Result.tie;
+                    result = "It is a tie";
                 } else if (playerMove.equals(Moves.paper)) {
-                    result = Result.player_win;
+                    result = "Player wins";
                 } else {
-                    result = Result.computer_win;
+                    result = "Computer wins";
                 }
             } else if (computerMove.equals(Moves.scissors)) {
                 if (playerMove.equals(Moves.rock)) {
-                    result = Result.player_win;
+                    result = "Player wins";
                 } else if (playerMove.equals(Moves.paper)) {
-                    result = Result.computer_win;
+                    result = "Computer wins";
                 } else {
-                    result = Result.tie;
+                    result = "It is a tie";
                 }
             }
 
-            logger.debug("result = " + result.toString());
+            logger.debug("result = " + result);
 
             return result;
 

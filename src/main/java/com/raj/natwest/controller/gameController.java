@@ -1,7 +1,6 @@
 package com.raj.natwest.controller;
 
 import com.raj.natwest.enums.Moves;
-import com.raj.natwest.enums.Result;
 import com.raj.natwest.service.GameServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -41,21 +40,16 @@ public class gameController {
         }
 
 
-        logger.debug("playerMove : " + playerMove);
-
-
         //return result
-        Result result = gameService.getResult(playerMove);
+        String result = gameService.getResult(playerMove);
 
-        if (result.equals(Result.tie)) {
-            return new ResponseEntity<>("It is a tie", HttpStatus.OK);
-        } else if (result.equals(Result.player_win)) {
-            return new ResponseEntity<>("Player wins", HttpStatus.OK);
-        } else if (result.equals(Result.computer_win)) {
-            return new ResponseEntity<>("Computer wins", HttpStatus.OK);
+        if(result == null)
+        {
+            return new ResponseEntity<>("Error in getting results!", HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>("Error in getting results!", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 
 
