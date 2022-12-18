@@ -1,12 +1,10 @@
 package com.raj.natwest.service;
 
-import com.raj.natwest.Exceptions.InvalidMoveException;
-import com.raj.natwest.Exceptions.NullParameterException;
+import com.raj.natwest.CustomExceptions.InvalidMoveException;
+import com.raj.natwest.CustomExceptions.NullParameterException;
 import com.raj.natwest.enums.Moves;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,10 +24,10 @@ public class GameServiceImpl implements GameService {
 
         String result = null;
 
-        //handling empty or null string parameter
+        //handling empty or null String parameter
         if(player == "" || player == null)
         {
-            throw new NullParameterException("Request parameter can not be null");
+            throw new NullParameterException("Request parameter can not be null or empty");
         }
 
         try {
@@ -38,7 +36,6 @@ public class GameServiceImpl implements GameService {
             Moves playerMove = Moves.valueOf(player.toLowerCase());
 
             logger.debug("playerMove = " + playerMove.toString());
-
 
             logger.debug("computerMove = " + computerMove.toString());
 
@@ -71,10 +68,13 @@ public class GameServiceImpl implements GameService {
             }
 
         }
+        //handling invalid player move
         catch (IllegalArgumentException illegalArgumentException) {
             logger.error(illegalArgumentException.getMessage());
             throw new InvalidMoveException("Invalid Move! You can only select Rock, Paper or Scissors");
-        }catch (Exception e) {
+        }
+        //handling other exceptions
+        catch (Exception e) {
             logger.error(e.getMessage());
             e.printStackTrace();
             throw e;
@@ -97,7 +97,7 @@ public class GameServiceImpl implements GameService {
             movesList.add(Moves.paper);
             movesList.add(Moves.scissors);
 
-            //get random integer from between 0 (including) and movesList size (excluding)
+            //generate random integer between 0 (included) and movesList size (excluded)
             int rnd = new Random().nextInt(movesList.size());
 
             //get movesList element based on index 'rnd'

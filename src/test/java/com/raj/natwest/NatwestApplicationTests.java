@@ -1,6 +1,7 @@
 package com.raj.natwest;
 
-import com.raj.natwest.Exceptions.NullParameterException;
+import com.raj.natwest.CustomExceptions.InvalidMoveException;
+import com.raj.natwest.CustomExceptions.NullParameterException;
 import com.raj.natwest.enums.Moves;
 import com.raj.natwest.service.GameServiceImpl;
 import org.junit.jupiter.api.*;
@@ -12,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class NatwestApplicationTests {
-
 
 	@Autowired
 	private GameServiceImpl gameService;
@@ -75,6 +75,21 @@ class NatwestApplicationTests {
 	void emptyPlayerMoveTest(){
 		assertThrows(NullParameterException.class, () -> gameService.getResult("",Moves.rock));
 	}
+
+	@Test
+	void invalidPlayerMove(){
+		assertThrows(InvalidMoveException.class, () -> gameService.getResult("rook",Moves.rock));
+		assertThrows(InvalidMoveException.class, () -> gameService.getResult("sicsor",Moves.rock));
+	}
+
+	@Test
+	void randomComputerMoveTest(){
+		assertThat(gameService.getRandomMove()).isIn(Moves.scissors, Moves.paper, Moves.rock);
+		assertThat(gameService.getRandomMove()).isIn(Moves.scissors, Moves.paper, Moves.rock);
+		assertThat(gameService.getRandomMove()).isIn(Moves.scissors, Moves.paper, Moves.rock);
+		assertThat(gameService.getRandomMove()).isIn(Moves.scissors, Moves.paper, Moves.rock);
+	}
+
 
 
 }
