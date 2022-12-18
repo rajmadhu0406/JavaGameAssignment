@@ -1,5 +1,7 @@
 package com.raj.natwest.service;
 
+import com.raj.natwest.Exceptions.InvalidMoveException;
+import com.raj.natwest.Exceptions.NullParameterException;
 import com.raj.natwest.enums.Moves;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,17 +22,28 @@ public class GameServiceImpl implements GameService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
-    public String getResult(Moves playerMove) {
+    public String getResult(String player, Moves computerMove)  {
 
-        logger.debug("parameter playerMove = " + playerMove.toString());
+        String result = null;
+
+        //handling empty or null string parameter
+        if(player == "" || player == null)
+        {
+            throw new NullParameterException("Request parameter can not be null");
+        }
 
         try {
 
-            Moves computerMove = getRandomMove();
+            //player move
+            Moves playerMove = Moves.valueOf(player.toLowerCase());
+
+            logger.debug("playerMove = " + playerMove.toString());
+
+
             logger.debug("computerMove = " + computerMove.toString());
 
-            String result = null;
 
+            //game logic
             if (computerMove.equals(Moves.paper)) {
                 if (playerMove.equals(Moves.rock)) {
                     result = "Computer wins";
@@ -57,13 +70,19 @@ public class GameServiceImpl implements GameService {
                 }
             }
 
-            logger.debug("result = " + result);
-
-            return result;
-
-        } catch (Exception e) {
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            logger.error(illegalArgumentException.getMessage());
+            throw new InvalidMoveException("Invalid Move! You can only select Rock, Paper or Scissors");
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            e.printStackTrace();
             throw e;
         }
+
+        logger.debug("result = " + result);
+
+        return result;
     }
 
     @Override
@@ -78,8 +97,10 @@ public class GameServiceImpl implements GameService {
             movesList.add(Moves.paper);
             movesList.add(Moves.scissors);
 
+            //get random integer from between 0 (including) and movesList size (excluding)
             int rnd = new Random().nextInt(movesList.size());
 
+            //get movesList element based on index 'rnd'
             return movesList.get(rnd);
 
         } catch (Exception e) {

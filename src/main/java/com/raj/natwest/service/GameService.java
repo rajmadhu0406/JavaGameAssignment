@@ -1,5 +1,6 @@
 package com.raj.natwest.service;
 
+import com.raj.natwest.Exceptions.NullParameterException;
 import com.raj.natwest.enums.Moves;
 
 public interface GameService {
@@ -11,7 +12,7 @@ public interface GameService {
      * @return result of the game
      *
      */
-    String getResult(Moves playerMove);
+    String getResult(String player, Moves computerMove) throws NullParameterException, Exception;
 
     /**
      * Generate random move out Rock, Paper or Scissors

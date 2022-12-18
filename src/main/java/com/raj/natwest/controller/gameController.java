@@ -1,5 +1,7 @@
 package com.raj.natwest.controller;
 
+import com.raj.natwest.Exceptions.InvalidMoveException;
+import com.raj.natwest.Exceptions.NullParameterException;
 import com.raj.natwest.enums.Moves;
 import com.raj.natwest.service.GameServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -19,37 +21,20 @@ public class gameController {
     @Autowired
     private GameServiceImpl gameService;
 
-    @ApiOperation(value = "Get game result", notes = "Returns the result of the game based on the parameter 'playerMove'")
+
+    @ApiOperation(value = "Get game result", notes = "Returns the result of the game based on the parameter 'playerMove'") //Swagger description
     @GetMapping("/play")
-    public ResponseEntity<Object> getResponse(@RequestParam(value = "playerMove") String player) {
+    public ResponseEntity<Object> getResponse(@RequestParam(value = "playerMove") String playerInput) {
 
-        Moves playerMove;
+        logger.debug("String player : " + playerInput);
 
-        //empty input handling
-        if (player.equals("") || player == null) {
-            logger.error("Player parameter is empty!");
-            return new ResponseEntity<>("Player move empty!", HttpStatus.BAD_REQUEST);
-        }
+        //get random computer move
+        Moves computerMove = gameService.getRandomMove();
 
-        //invalid input handling
-        try {
-            playerMove = Moves.valueOf(player.toLowerCase());
-        } catch (Exception e) {
-            logger.error("invalid playerMove!");
-            return new ResponseEntity<>(e.getMessage() + " => Enter moves from Rock, Paper or Scissors only", HttpStatus.BAD_REQUEST);
-        }
+        String result = gameService.getResult(playerInput, computerMove);
+        return  new ResponseEntity<>(result, HttpStatus.OK);
 
-
-        //return result
-        String result = gameService.getResult(playerMove);
-
-        if(result == null)
-        {
-            return new ResponseEntity<>("Error in getting results!", HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-
+        //http://localhost:8081/game/play?playerMove=Rock
     }
 
 
