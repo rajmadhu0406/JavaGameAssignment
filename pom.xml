@@ -67,10 +67,8 @@
 			<version>10.1.4</version>
 		</dependency>
 
-		
 
-
-    </dependencies>
+	</dependencies>
 
 	<build>
 		<plugins>

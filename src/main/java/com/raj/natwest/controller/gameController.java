@@ -5,6 +5,8 @@ import com.raj.natwest.Exceptions.NullParameterException;
 import com.raj.natwest.enums.Moves;
 import com.raj.natwest.service.GameServiceImpl;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,8 @@ public class gameController {
     private GameServiceImpl gameService;
 
 
-    @ApiOperation(value = "Get game result", notes = "Returns the result of the game based on the parameter 'playerMove'") //Swagger description
+    @ApiOperation(value = "Get game result", notes = "Returns the result of the game based on the user parameter 'playerMove' and randomly generated 'computerMove'.\n\n\n"+"Accepted player moves are 'Rock', 'Paper' and 'Scissors'.\n\n\n"+"Return result can be 'Computer wins', 'Player wins' or 'It is a tie'.\n", response = String.class) //Swagger description
+
     @GetMapping("/play")
     public ResponseEntity<Object> getResponse(@RequestParam(value = "playerMove") String playerInput) {
 

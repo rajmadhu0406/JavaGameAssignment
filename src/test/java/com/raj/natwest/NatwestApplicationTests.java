@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import org.testng.annotations.Test;
-import org.junit.Ignore;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 class NatwestApplicationTests {
@@ -73,13 +71,9 @@ class NatwestApplicationTests {
 	}
 
 
-	@Test(expected = NullParameterException.class)
+	@Test
 	void emptyPlayerMoveTest(){
-		String actualResult = gameService.getResult("", Moves.paper);
-		String expectedResult = "Computer wins";
-
-		System.out.println("\n\n ==>   " + actualResult);
-//		assertThat(actualResult).isEqualTo(expectedResult);
+		assertThrows(NullParameterException.class, () -> gameService.getResult("",Moves.rock));
 	}
 
 
