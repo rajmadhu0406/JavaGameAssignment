@@ -45,6 +45,7 @@ class NatwestApplicationTests {
 		expectedResult = "Player wins";
 		assertThat(actualResult).isEqualTo(expectedResult);
 
+
 		//rock
 		actualResult = gameService.getResult("rock", Moves.rock);
 		expectedResult = "It is a tie";
@@ -58,6 +59,7 @@ class NatwestApplicationTests {
 		expectedResult = "Computer wins";
 		assertThat(actualResult).isEqualTo(expectedResult);
 
+		
 		//scissors
 		actualResult = gameService.getResult("rock", Moves.scissors);
 		expectedResult = "Player wins";

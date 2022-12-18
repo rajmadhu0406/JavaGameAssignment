@@ -15,7 +15,6 @@ public interface GameService {
     String getResult(String player, Moves computerMove) throws NullParameterException, Exception;
 
 
-
     /**
      * Generate random move out of Rock, Paper or Scissors
      *
