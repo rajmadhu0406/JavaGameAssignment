@@ -1,6 +1,5 @@
 # JavaGameAssignment
-This repository is for the Natwest Group internship assignment. (Rock, Paper and Scissors).
-
+This repository contains  **Rock, Paper and Scissors**  assignment for the Java & Microservices Development internship. 
 
 ## Requirements
 
