@@ -17,7 +17,7 @@ Run `com.raj.natwest.NatwestApplication` java file inside src->main->java folder
 
 ## To run test cases
 
-Run `com.raj.natwest.NatwestApplicationTests` java file inside src->main->test folder.
+Run `com.raj.natwest.NatwestApplicationTests` java file inside src->test folder.
 
 ---
 
